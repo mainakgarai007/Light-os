@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #0a0a0f;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Custom slider styles */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: 2px solid #6366f1;
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: 2px solid #6366f1;
+}
+
+input[type='range']::-webkit-slider-track {
+  height: 8px;
+  border-radius: 4px;
+}
+
+input[type='range']::-moz-range-track {
+  height: 8px;
+  border-radius: 4px;
+}
+
+/* Red slider */
+.slider-red::-webkit-slider-track {
+  background: linear-gradient(to right, #000, #ff0000);
+}
+
+.slider-red::-moz-range-track {
+  background: linear-gradient(to right, #000, #ff0000);
+}
+
+/* Green slider */
+.slider-green::-webkit-slider-track {
+  background: linear-gradient(to right, #000, #00ff00);
+}
+
+.slider-green::-moz-range-track {
+  background: linear-gradient(to right, #000, #00ff00);
+}
+
+/* Blue slider */
+.slider-blue::-webkit-slider-track {
+  background: linear-gradient(to right, #000, #0000ff);
+}
+
+.slider-blue::-moz-range-track {
+  background: linear-gradient(to right, #000, #0000ff);
+}
+
+/* Brightness slider */
+.slider-brightness::-webkit-slider-track {
+  background: linear-gradient(to right, #000, #fff);
+}
+
+.slider-brightness::-moz-range-track {
+  background: linear-gradient(to right, #000, #fff);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #13131a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f1f28;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6366f1;
+}
