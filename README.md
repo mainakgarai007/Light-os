@@ -54,11 +54,20 @@ The built files will be in the `dist` directory.
 
 ### Deploying to GitHub Pages
 
-1. Build the project
-2. Push the `dist` folder to the `gh-pages` branch
-3. Enable GitHub Pages in repository settings
+#### Using GitHub Actions (Recommended)
 
-Or use GitHub Actions for automatic deployment (see `.github/workflows/deploy.yml`)
+1. **Enable GitHub Pages** in repository settings:
+   - Go to Settings → Pages
+   - Under "Source", select "GitHub Actions"
+2. Push to the `main` branch - the workflow will automatically build and deploy
+
+The workflow (`.github/workflows/deploy.yml`) will build on every push to `main`. If GitHub Pages is not enabled, the build will succeed but deployment will be skipped.
+
+#### Manual Deployment
+
+1. Build the project: `npm run build`
+2. Push the `dist` folder to the `gh-pages` branch
+3. Enable GitHub Pages in repository settings pointing to the `gh-pages` branch
 
 ## 🎮 Usage
 

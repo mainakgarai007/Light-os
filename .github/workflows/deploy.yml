@@ -47,4 +47,12 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
+        continue-on-error: true
         uses: actions/deploy-pages@v4
+      
+      - name: Deployment Status
+        if: steps.deployment.outcome == 'failure'
+        run: |
+          echo "::warning::GitHub Pages deployment failed. This is expected if GitHub Pages is not enabled."
+          echo "::warning::To enable GitHub Pages: Go to Settings → Pages → Source → Select 'GitHub Actions'"
+          echo "::warning::The build artifact was created successfully and can be deployed manually if needed."
