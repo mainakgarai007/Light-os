@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { setPower } from '../utils/deviceAPI';
 
 interface PowerToggleProps {
@@ -6,7 +6,7 @@ interface PowerToggleProps {
   onUpdate: () => void;
 }
 
-const PowerToggle: React.FC<PowerToggleProps> = ({ power, onUpdate }) => {
+const PowerToggle: FC<PowerToggleProps> = ({ power, onUpdate }) => {
   const handleToggle = async () => {
     try {
       await setPower(!power);

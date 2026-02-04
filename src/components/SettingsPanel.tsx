@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, useState } from 'react';
 import { DeviceState } from '../types';
 import { restartDevice } from '../utils/deviceAPI';
 import { formatUptime, formatMemory } from '../utils/formatters';
@@ -8,8 +8,8 @@ interface SettingsPanelProps {
   onUpdate: () => void;
 }
 
-const SettingsPanel: React.FC<SettingsPanelProps> = ({ state, onUpdate }) => {
-  const [isRestarting, setIsRestarting] = React.useState(false);
+const SettingsPanel: FC<SettingsPanelProps> = ({ state, onUpdate }) => {
+  const [isRestarting, setIsRestarting] = useState(false);
 
   const handleRestart = async () => {
     if (!confirm('Are you sure you want to restart the device?')) {

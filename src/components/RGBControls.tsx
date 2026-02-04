@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { RGB } from '../types';
 import { setRGB, setBrightness } from '../utils/deviceAPI';
 import { rgbToHex, hexToRgb } from '../utils/formatters';
@@ -9,7 +9,7 @@ interface RGBControlsProps {
   onUpdate: () => void;
 }
 
-const RGBControls: React.FC<RGBControlsProps> = ({ rgb, brightness, onUpdate }) => {
+const RGBControls: FC<RGBControlsProps> = ({ rgb, brightness, onUpdate }) => {
   const [localRgb, setLocalRgb] = useState(rgb);
   const [localBrightness, setLocalBrightness] = useState(brightness);
   const [colorHex, setColorHex] = useState(rgbToHex(rgb.r, rgb.g, rgb.b));

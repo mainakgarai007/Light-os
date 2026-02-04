@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { FC, useState, useRef, useEffect } from 'react';
 import { ConsoleEntry } from '../types';
 import { sendCommand } from '../utils/deviceAPI';
 import { formatTimestamp } from '../utils/formatters';
@@ -7,7 +7,7 @@ interface CommandConsoleProps {
   onUpdate: () => void;
 }
 
-const CommandConsole: React.FC<CommandConsoleProps> = ({ onUpdate }) => {
+const CommandConsole: FC<CommandConsoleProps> = ({ onUpdate }) => {
   const [entries, setEntries] = useState<ConsoleEntry[]>([
     {
       timestamp: new Date(),

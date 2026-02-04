@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { effectsDatabase } from '../data/effects';
 import { setEffect } from '../utils/deviceAPI';
 
@@ -7,7 +7,7 @@ interface EffectSelectorProps {
   onUpdate: () => void;
 }
 
-const EffectSelector: React.FC<EffectSelectorProps> = ({ currentEffect, onUpdate }) => {
+const EffectSelector: FC<EffectSelectorProps> = ({ currentEffect, onUpdate }) => {
   const handleEffectClick = async (effectId: number) => {
     try {
       await setEffect(effectId);

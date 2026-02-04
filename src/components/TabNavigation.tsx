@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { TabType } from '../types';
 
 interface TabNavigationProps {
@@ -6,7 +6,7 @@ interface TabNavigationProps {
   onTabChange: (tab: TabType) => void;
 }
 
-const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, onTabChange }) => {
+const TabNavigation: FC<TabNavigationProps> = ({ activeTab, onTabChange }) => {
   const tabs: { id: TabType; label: string; icon: string }[] = [
     { id: 'dashboard', label: 'Dashboard', icon: '📊' },
     { id: 'effects', label: 'Effects', icon: '✨' },

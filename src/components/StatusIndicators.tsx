@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 
 interface StatusIndicatorsProps {
   power: boolean;
@@ -7,7 +7,7 @@ interface StatusIndicatorsProps {
   isOnline: boolean;
 }
 
-const StatusIndicators: React.FC<StatusIndicatorsProps> = ({
+const StatusIndicators: FC<StatusIndicatorsProps> = ({
   power,
   effect,
   wifiConnected,

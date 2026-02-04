@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import StatusIndicators from './StatusIndicators';
 
 interface HeaderProps {
@@ -9,7 +9,7 @@ interface HeaderProps {
   isOnline: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({
+const Header: FC<HeaderProps> = ({
   deviceName,
   power,
   effect,

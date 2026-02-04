@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { scenes } from '../data/scenes';
 import { setScene } from '../utils/deviceAPI';
 
@@ -6,7 +6,7 @@ interface SceneButtonsProps {
   onUpdate: () => void;
 }
 
-const SceneButtons: React.FC<SceneButtonsProps> = ({ onUpdate }) => {
+const SceneButtons: FC<SceneButtonsProps> = ({ onUpdate }) => {
   const handleSceneClick = async (sceneName: string) => {
     try {
       await setScene(sceneName.toLowerCase());

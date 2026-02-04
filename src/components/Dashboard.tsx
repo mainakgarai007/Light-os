@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import RGBControls from './RGBControls';
 import PowerToggle from './PowerToggle';
 import { DeviceState } from '../types';
@@ -8,7 +8,7 @@ interface DashboardProps {
   onUpdate: () => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ state, onUpdate }) => {
+const Dashboard: FC<DashboardProps> = ({ state, onUpdate }) => {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
