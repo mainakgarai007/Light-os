@@ -10,6 +10,18 @@ import { getDeviceState } from './utils/deviceAPI';
 import { stubDeviceState } from './data/stubData';
 import { DeviceState, TabType } from './types';
 
+/**
+ * RGB Lighting OS - Main Application Component
+ * 
+ * A local-first IoT dashboard for controlling ESP8266-based RGB LED devices.
+ * Direct HTTP communication over WiFi - no cloud services, no user authentication.
+ * 
+ * Architecture:
+ * - Polls device state every 2 seconds via GET /state
+ * - Sends commands via POST /command
+ * - All communication is local network only
+ * - Falls back to stub data when device is offline
+ */
 function App() {
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [deviceState, setDeviceState] = useState<DeviceState>(stubDeviceState);

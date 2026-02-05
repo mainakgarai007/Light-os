@@ -1,10 +1,22 @@
 import { StateResponse, CommandResponse, DeviceState } from '../types';
 import { stubDeviceState } from '../data/stubData';
 
-const API_BASE_URL = ''; // Empty for same-origin requests
-const USE_STUB_DATA = false; // Set to false when connecting to real device
+// ========================================
+// Local Device API - Direct HTTP Communication
+// ========================================
+// This module handles direct HTTP communication with the ESP8266 device
+// on your local WiFi network. No cloud services or external APIs involved.
+// All requests go directly from browser to device.
 
-// Access token management
+// API Configuration
+const API_BASE_URL = ''; // Empty for same-origin requests (ESP8266 serves both UI and API)
+const USE_STUB_DATA = false; // Set to true for development without physical device
+
+// ========================================
+// Access Token Management (Local Storage)
+// ========================================
+// Optional token for device-level security. Stored locally in browser,
+// never sent to external services or cloud APIs.
 export const getAccessToken = (): string | null => {
   return localStorage.getItem('deviceAccessToken');
 };
