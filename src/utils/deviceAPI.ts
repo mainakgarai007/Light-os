@@ -8,9 +8,46 @@ import { stubDeviceState } from '../data/stubData';
 // on your local WiFi network. No cloud services or external APIs involved.
 // All requests go directly from browser to device.
 
+// Validate IP address format
+const isValidIP = (ip: string): boolean => {
+  const ipPattern = /^(\d{1,3}\.){3}\d{1,3}$/;
+  if (!ipPattern.test(ip)) return false;
+  
+  const parts = ip.split('.');
+  return parts.every(part => {
+    const num = parseInt(part, 10);
+    return num >= 0 && num <= 255;
+  });
+};
+
 // API Configuration
-const API_BASE_URL = ''; // Empty for same-origin requests (ESP8266 serves both UI and API)
+// When deployed to GitHub Pages, users need to set the ESP8266 IP address
+// Default to stub data if no IP is configured
+const getAPIBaseURL = (): string => {
+  const savedIP = localStorage.getItem('esp8266_ip');
+  if (savedIP && isValidIP(savedIP)) {
+    return `http://${savedIP}`;
+  }
+  return '';
+};
+
 const USE_STUB_DATA = false; // Set to true for development without physical device
+
+// Device IP Configuration Management
+export const getDeviceIP = (): string | null => {
+  return localStorage.getItem('esp8266_ip');
+};
+
+export const setDeviceIP = (ip: string): void => {
+  if (!isValidIP(ip)) {
+    throw new Error('Invalid IP address format. Expected format: xxx.xxx.xxx.xxx');
+  }
+  localStorage.setItem('esp8266_ip', ip);
+};
+
+export const clearDeviceIP = (): void => {
+  localStorage.removeItem('esp8266_ip');
+};
 
 // ========================================
 // Access Token Management (Local Storage)
@@ -47,7 +84,7 @@ export const getDeviceState = async (): Promise<DeviceState> => {
       headers['Authorization'] = `Bearer ${token}`;
     }
 
-    const response = await fetch(`${API_BASE_URL}/state`, {
+    const response = await fetch(`${getAPIBaseURL()}/state`, {
       method: 'GET',
       headers,
     });
@@ -93,7 +130,7 @@ export const sendCommand = async (command: string): Promise<CommandResponse> => 
     // Strip leading / if present
     const cleanCommand = command.startsWith('/') ? command.substring(1) : command;
 
-    const response = await fetch(`${API_BASE_URL}/command`, {
+    const response = await fetch(`${getAPIBaseURL()}/command`, {
       method: 'POST',
       headers,
       body: JSON.stringify({ cmd: cleanCommand }),

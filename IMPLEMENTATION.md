@@ -162,6 +162,7 @@ npm run build  # Creates static files in dist/ folder
 - **Base Path**: Configured as /Light-os/
 - **Static Files Only**: GitHub Pages serves HTML/CSS/JS - NO server code, NO backend
 - **ESP8266 Integration**: After browser loads static files from GitHub Pages, it connects to ESP8266 API on local network
+- **IP Configuration**: Users configure ESP8266 IP address in Settings tab (stored in localStorage)
 
 ## Testing & Validation
 - ✅ All components render correctly
