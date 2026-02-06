@@ -74,9 +74,18 @@ A modern, premium dark-themed dashboard for controlling ESP8266-based RGB LED li
 ### Frontend Stack
 - **React 18**: UI library with functional components
 - **TypeScript**: Type-safe development
-- **Vite**: Fast build tool and dev server
+- **Vite**: Build tool (provides dev server for local development only)
 - **Tailwind CSS**: Utility-first styling framework
 - **Custom Dark Theme**: Premium look with custom colors
+
+> **Deployment Note**: The frontend is deployed as static files to GitHub Pages. No web server is created or hosted in the frontend. Vite's dev server is only used during local development. The ESP8266 is the only web server in the production architecture.
+
+### Deployment Model
+- **Development**: Vite dev server runs locally (localhost:5173) for rapid development
+- **Production**: Static files (HTML/CSS/JS) deployed to GitHub Pages
+- **No Frontend Server**: The production frontend has NO server component - just static files
+- **ESP8266 Web Server**: The ONLY web server in production, serving the RGB LED control API
+- **Communication**: Browser fetches static files from GitHub Pages, then communicates directly with ESP8266 API on local network
 
 ### Component Structure
 ```
@@ -134,23 +143,25 @@ src/
 
 ## Build & Deployment
 
-### Development
+### Local Development
 ```bash
 npm install
-npm run dev
-# Access at http://localhost:5173/Light-os/
+npm run dev  # Starts Vite dev server at http://localhost:5173/Light-os/
 ```
+> **Note**: `npm run dev` starts a local development server for testing. This server is NOT used in production.
 
 ### Production Build
 ```bash
-npm run build
-# Output in dist/ folder
+npm run build  # Creates static files in dist/ folder
+# Output: HTML, CSS, JavaScript files - NO SERVER CODE
 ```
 
 ### GitHub Pages Deployment
-- Automatic via GitHub Actions on push to main
-- Manual: Deploy dist/ folder to gh-pages branch
-- Base path configured: /Light-os/
+- **Automatic Deployment**: GitHub Actions builds and deploys on push to main
+- **Manual Deployment**: Deploy dist/ folder to gh-pages branch
+- **Base Path**: Configured as /Light-os/
+- **Static Files Only**: GitHub Pages serves HTML/CSS/JS - NO server code, NO backend
+- **ESP8266 Integration**: After browser loads static files from GitHub Pages, it connects to ESP8266 API on local network
 
 ## Testing & Validation
 - ✅ All components render correctly
