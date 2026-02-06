@@ -9,8 +9,27 @@ import { stubDeviceState } from '../data/stubData';
 // All requests go directly from browser to device.
 
 // API Configuration
-const API_BASE_URL = ''; // Empty for same-origin requests (ESP8266 serves both UI and API)
+// When deployed to GitHub Pages, users need to set the ESP8266 IP address
+// Default to stub data if no IP is configured
+const getAPIBaseURL = (): string => {
+  const savedIP = localStorage.getItem('esp8266_ip');
+  return savedIP ? `http://${savedIP}` : '';
+};
+
 const USE_STUB_DATA = false; // Set to true for development without physical device
+
+// Device IP Configuration Management
+export const getDeviceIP = (): string | null => {
+  return localStorage.getItem('esp8266_ip');
+};
+
+export const setDeviceIP = (ip: string): void => {
+  localStorage.setItem('esp8266_ip', ip);
+};
+
+export const clearDeviceIP = (): void => {
+  localStorage.removeItem('esp8266_ip');
+};
 
 // ========================================
 // Access Token Management (Local Storage)
@@ -47,7 +66,7 @@ export const getDeviceState = async (): Promise<DeviceState> => {
       headers['Authorization'] = `Bearer ${token}`;
     }
 
-    const response = await fetch(`${API_BASE_URL}/state`, {
+    const response = await fetch(`${getAPIBaseURL()}/state`, {
       method: 'GET',
       headers,
     });
@@ -93,7 +112,7 @@ export const sendCommand = async (command: string): Promise<CommandResponse> => 
     // Strip leading / if present
     const cleanCommand = command.startsWith('/') ? command.substring(1) : command;
 
-    const response = await fetch(`${API_BASE_URL}/command`, {
+    const response = await fetch(`${getAPIBaseURL()}/command`, {
       method: 'POST',
       headers,
       body: JSON.stringify({ cmd: cleanCommand }),
