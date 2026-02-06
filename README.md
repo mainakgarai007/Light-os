@@ -30,8 +30,8 @@ This is a personal IoT dashboard that puts you in direct control of your hardwar
 
 ### Prerequisites
 
-- Node.js 16+ and npm/yarn
-- ESP8266 device with REST API endpoints:
+- Node.js 16+ and npm/yarn (for development)
+- ESP8266 device with REST API endpoints (see [ESP8266 Firmware Guide](./ESP8266_FIRMWARE_GUIDE.md))
   - `GET /state` - Returns device state
   - `POST /command` - Accepts commands with JSON payload `{ cmd: "command" }`
 

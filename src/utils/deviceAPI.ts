@@ -8,12 +8,27 @@ import { stubDeviceState } from '../data/stubData';
 // on your local WiFi network. No cloud services or external APIs involved.
 // All requests go directly from browser to device.
 
+// Validate IP address format
+const isValidIP = (ip: string): boolean => {
+  const ipPattern = /^(\d{1,3}\.){3}\d{1,3}$/;
+  if (!ipPattern.test(ip)) return false;
+  
+  const parts = ip.split('.');
+  return parts.every(part => {
+    const num = parseInt(part, 10);
+    return num >= 0 && num <= 255;
+  });
+};
+
 // API Configuration
 // When deployed to GitHub Pages, users need to set the ESP8266 IP address
 // Default to stub data if no IP is configured
 const getAPIBaseURL = (): string => {
   const savedIP = localStorage.getItem('esp8266_ip');
-  return savedIP ? `http://${savedIP}` : '';
+  if (savedIP && isValidIP(savedIP)) {
+    return `http://${savedIP}`;
+  }
+  return '';
 };
 
 const USE_STUB_DATA = false; // Set to true for development without physical device
@@ -24,6 +39,9 @@ export const getDeviceIP = (): string | null => {
 };
 
 export const setDeviceIP = (ip: string): void => {
+  if (!isValidIP(ip)) {
+    throw new Error('Invalid IP address format. Expected format: xxx.xxx.xxx.xxx');
+  }
   localStorage.setItem('esp8266_ip', ip);
 };
 

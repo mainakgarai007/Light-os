@@ -12,6 +12,10 @@ const SettingsPanel: FC<SettingsPanelProps> = ({ state, onUpdate }) => {
   const [isRestarting, setIsRestarting] = useState(false);
   const [deviceIP, setDeviceIPInput] = useState(getDeviceIP() || '');
   const [ipSaved, setIpSaved] = useState(false);
+  const [ipError, setIpError] = useState('');
+
+  // Delay before refreshing device state after IP configuration
+  const IP_CONFIG_REFRESH_DELAY = 500; // ms
 
   const handleRestart = async () => {
     if (!confirm('Are you sure you want to restart the device?')) {
@@ -33,11 +37,17 @@ const SettingsPanel: FC<SettingsPanelProps> = ({ state, onUpdate }) => {
 
   const handleSaveIP = () => {
     if (deviceIP.trim()) {
-      setDeviceIP(deviceIP.trim());
-      setIpSaved(true);
-      setTimeout(() => setIpSaved(false), 3000);
-      // Refresh device state after setting IP
-      setTimeout(() => onUpdate(), 500);
+      try {
+        setDeviceIP(deviceIP.trim());
+        setIpSaved(true);
+        setIpError('');
+        setTimeout(() => setIpSaved(false), 3000);
+        // Refresh device state after setting IP
+        setTimeout(() => onUpdate(), IP_CONFIG_REFRESH_DELAY);
+      } catch (error) {
+        setIpError(error instanceof Error ? error.message : 'Invalid IP address');
+        setIpSaved(false);
+      }
     }
   };
 
@@ -45,6 +55,7 @@ const SettingsPanel: FC<SettingsPanelProps> = ({ state, onUpdate }) => {
     clearDeviceIP();
     setDeviceIPInput('');
     setIpSaved(false);
+    setIpError('');
   };
 
   return (
@@ -80,6 +91,11 @@ const SettingsPanel: FC<SettingsPanelProps> = ({ state, onUpdate }) => {
                 </button>
               )}
             </div>
+            {ipError && (
+              <p className="text-xs text-accent-danger mt-2">
+                {ipError}
+              </p>
+            )}
             <p className="text-xs text-gray-400 mt-2">
               Enter the local IP address of your ESP8266 device (e.g., 192.168.1.100)
             </p>
