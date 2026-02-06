@@ -59,6 +59,21 @@ uint16_t effectStep = 0;
 uint8_t effectPosition = 0;
 bool effectDirection = true;
 
+// ==================== FORWARD DECLARATIONS ====================
+// Helper functions
+uint32_t Wheel(byte WheelPos);
+uint32_t applyBrightness(uint32_t color, uint8_t brightness);
+void setAll(uint8_t r, uint8_t g, uint8_t b);
+void clearAll();
+String getEffectName(uint16_t effectId);
+
+// Math helper functions
+uint16_t beatsin16(uint16_t bpm, uint16_t lowest, uint16_t highest);
+uint8_t beatsin8(uint16_t bpm, uint8_t lowest, uint8_t highest);
+uint8_t beatsin88(uint16_t bpm, uint8_t lowest, uint8_t highest);
+int16_t sin16(uint16_t theta);
+uint8_t sin8(uint8_t theta);
+
 // ==================== EFFECT NAMES ====================
 const char* effectNames[] = {
   "Static", "Rainbow", "Rainbow Chase", "Color Wipe", "Theater Chase",
