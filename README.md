@@ -86,23 +86,82 @@ The workflow (`.github/workflows/deploy.yml`) will build on every push to `main`
 
 ## 🎮 Usage
 
-### Connecting to Your Device
+### Connecting to Your ESP8266 Device
 
 **Important**: The dashboard and ESP8266 must be on the **same local WiFi network**.
 
-The application automatically attempts to connect to the ESP8266 device at the same origin (same IP address). Here's how to set it up:
+This is a **static web app** hosted on GitHub Pages. It acts as a **remote control** that sends HTTP requests to your ESP8266 device over your local WiFi network.
 
-1. **Configure ESP8266 WiFi**: Connect your ESP8266 to your WiFi network using its built-in AP mode configuration
-2. **Deploy Dashboard**: Access the Light-os dashboard from GitHub Pages or locally
-3. **Same Network**: Ensure your device (phone/laptop) running the browser is on the same WiFi network
-4. **Automatic Connection**: The dashboard will automatically try to connect to the ESP8266
-5. **Direct Control**: All commands are sent directly from browser to ESP8266 via HTTP
+#### Step-by-Step Setup:
+
+1. **Flash ESP8266 Firmware**: 
+   - Upload firmware to your ESP8266 that implements the REST API endpoints:
+     - `GET /state` - Returns device state as JSON
+     - `POST /command` - Accepts commands with JSON payload `{ cmd: "command" }`
+
+2. **Connect ESP8266 to WiFi**: 
+   - Configure your ESP8266 to connect to your local WiFi network
+   - Note the IP address assigned to the ESP8266 (e.g., 192.168.1.100)
+
+3. **Access the Dashboard**: 
+   - Open the Light-os dashboard from GitHub Pages: `https://mainakgarai007.github.io/Light-os/`
+   - Or run locally: `npm run dev`
+
+4. **Configure ESP8266 IP Address**:
+   - Go to the **Settings** tab in the dashboard
+   - Enter your ESP8266's local IP address (e.g., 192.168.1.100)
+   - Click **Save**
+
+5. **Same Network Requirement**: 
+   - Ensure your device (phone/laptop/tablet) running the browser is on the **same WiFi network** as the ESP8266
+   - The browser will send HTTP requests directly to the ESP8266 at `http://[ESP8266_IP]/state` and `http://[ESP8266_IP]/command`
+
+6. **Start Controlling**: 
+   - Once configured, the dashboard will connect to your ESP8266
+   - Use the Dashboard, Effects, Console, and Scene buttons to control your RGB lights
+   - All commands are sent **directly** from your browser to the ESP8266 - no cloud, no internet required
 
 **No cloud services, no internet required** (after initial dashboard load from GitHub Pages).
 
+### ESP8266 API Requirements
+
+Your ESP8266 firmware must implement these endpoints:
+
+**GET /state** - Returns current device state:
+```json
+{
+  "success": true,
+  "state": {
+    "power": true,
+    "rgb": { "r": 255, "g": 0, "b": 0 },
+    "brightness": 200,
+    "effect": 0,
+    "effectName": "Static",
+    "wifiConnected": true,
+    "deviceName": "RGB Light",
+    "uptime": 123456,
+    "freeMemory": 32768
+  }
+}
+```
+
+**POST /command** - Accepts commands:
+```json
+{
+  "cmd": "power on"
+}
+```
+Response:
+```json
+{
+  "success": true,
+  "message": "Power turned on"
+}
+```
+
 ### Access Token
 
-If your device requires authentication, it will prompt for a 4-6 digit access code. This code is stored in localStorage for future sessions.
+If your device requires authentication, you can optionally implement Bearer token authentication. The dashboard supports storing an access token in localStorage.
 
 ### Available Commands
 
