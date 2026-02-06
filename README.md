@@ -48,12 +48,14 @@ cd Light-os
 npm install
 ```
 
-3. Start the development server:
+3. Start local development (Vite dev server - for development only):
 ```bash
 npm run dev
 ```
 
 4. Open your browser to `http://localhost:5173`
+
+> **Note**: The `npm run dev` command starts Vite's local development server for coding and testing. This is NOT used in production. The deployed GitHub Pages site serves static files only - no server is created or hosted in the frontend.
 
 ### Building for Production
 
@@ -160,12 +162,13 @@ If your device requires authentication, it will prompt for a 4-6 digit access co
 
 ### Key Architecture Points
 
-1. **Static Web App**: The dashboard is a static React application hosted on GitHub Pages
+1. **Static Web App**: The dashboard is a static React application hosted on GitHub Pages - HTML, CSS, and JavaScript files only, no backend server
 2. **Local Network Only**: Both your browser and ESP8266 must be on the same WiFi network
 3. **No Internet Required**: Once loaded, the dashboard works completely offline (no cloud APIs)
 4. **Direct HTTP API**: Simple REST endpoints (`GET /state`, `POST /command`) on the ESP8266
 5. **No Authentication System**: Optional access token for device security, but no user management
 6. **Client-Side Only**: All logic runs in your browser, no backend server needed
+7. **ESP8266 = Only Web Server**: The ESP8266 is the ONLY web server in production - it serves the RGB LED control API
 
 ### Why This Approach?
 
@@ -294,16 +297,18 @@ Sends a command to the device.
 
 - **React 18** - UI library
 - **TypeScript** - Type safety
-- **Vite** - Build tool and dev server
+- **Vite** - Build tool (dev server for local development only)
 - **Tailwind CSS** - Styling framework
 - **ESLint** - Code linting
 
 ### Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
+- `npm run dev` - Start Vite dev server (local development only)
+- `npm run build` - Build static files for production deployment
+- `npm run preview` - Preview production build locally (development only)
 - `npm run lint` - Run ESLint
+
+> **Important**: The `dev` and `preview` commands run local development servers for testing. In production, GitHub Pages serves static HTML/CSS/JS files - no server is created in the frontend. The ESP8266 is the only web server in this project.
 
 ## ❓ FAQ
 
